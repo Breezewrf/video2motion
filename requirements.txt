@@ -1,0 +1,14 @@
+# UniMotion 核心依赖
+numpy
+scipy
+mujoco
+joblib
+pyyaml
+imageio
+loop-rate-limiters
+rich
+
+# 以下按需安装 (取消注释即可)
+# torch              # GVHMR / Kimodo 需要
+# gvhmr              # Video 源需要 (pip install 或从源码安装)
+# kimodo             # Kimodo 源需要

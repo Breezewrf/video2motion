@@ -1,0 +1,10 @@
+[project]
+name = "unimotion"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mjlab==1.2.0",
+    "mujoco==3.7.0",
+]
