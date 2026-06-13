@@ -5,5 +5,12 @@
 
 `python3 gmr/scripts/smplx_to_robot.py --smplx_file ./motion_data/smpl_npz/run_front.npz --robot unitree_g1_23dof --save_path ./motion_data/gmr_pkl/run_front.pkl`
 
-`python3 gmr/scripts/batch_gmr_pkl_to_csv.py --folder /home/breeze/Desktop/workplace/Humanoid/UniMotion/motion_data/gmr_pkl`
+`python3 gmr/scripts/batch_gmr_pkl_to_csv.py --folder ./motion_data/gmr_pkl`
 
+`python3 vis_robot_motion.py --robot unitree_g1_23dof --robot_motion_path motion_data/gmr_pkl/run_front.pkl --xyzw`
+
+`python3 ./scripts/csv_to_npz.py --input-file ../motion_data/gmr_pkl/csv/run_front.csv --output-name run_front.npz --input-fps 30 --output-fps 50 --robot g1_23dof`
+
+
+## Start Train
+`python ./scripts/train.py Unitree-G1-23Dof-Tracking-No-State-Estimation --motion_file=./src/assets/motions/g1_23dof/run_front.npz --env.scene.num-envs=4096`

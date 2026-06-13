@@ -5,6 +5,20 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "einops>=0.8.2",
+    "joblib>=1.5.3",
+    "loop-rate-limiters>=1.2.0",
+    "mink>=1.1.0",
     "mjlab==1.2.0",
     "mujoco==3.7.0",
+    "scipy>=1.15.3",
+    "smplx",
+    "warp-lang==1.12.1",
+    "mujoco-warp",
+    "unitree-rl-mjlab",
+    "torch==2.11.0",
 ]
+
+[tool.uv.sources]
+smplx = { git = "https://github.com/vchoutas/smplx.git" }
+unitree-rl-mjlab = { path = "./unitree_rl_mjlab", editable = true }
