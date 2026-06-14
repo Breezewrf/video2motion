@@ -1,3 +1,6 @@
 __pycache__
 .vscode
 body_models/
+*.pt
+*.pth
+*.ckpt

@@ -1,7 +1,7 @@
 import argparse
 import pickle
 import os
-
+import joblib
 import numpy as np
 
 if __name__ == "__main__":
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     for i, file in enumerate(os.listdir(args.folder)):
         if file.endswith(".pkl"):
             with open(os.path.join(args.folder, file), "rb") as f:
-                motion_data = pickle.load(f)
+                motion_data = joblib.load(f)
         else:
             continue
 
