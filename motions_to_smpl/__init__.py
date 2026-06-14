@@ -2,9 +2,12 @@
 motions_to_smpl: 多源运动数据 → SMPL 统一格式转换器
 
 支持的数据源:
-    - video (GVHMR): 从视频估计人体运动
     - amass: AMASS 动捕数据集
     - kimodo: Kimodo 文本生成动作
+
+注意:
+    video 是输入类型，不是 SMPLData 转换器。当前视频路径默认使用
+    GVHMR 生成 hmr4d_results.pt，并由 GMR 直接消费该文件。
 
 用法:
     from motions_to_smpl import CONVERTER_REGISTRY, validate_smpl_data
@@ -14,20 +17,17 @@ motions_to_smpl: 多源运动数据 → SMPL 统一格式转换器
 """
 
 from .base import BaseConverter, validate_smpl_data, create_smpl_data
-from .gvhmr_converter import GVHMRConverter
 from .amass_converter import AMASSConverter
 from .kimodo_converter import KimodoConverter
 
 
 CONVERTER_REGISTRY = {
-    "video": GVHMRConverter,
     "amass": AMASSConverter,
     "kimodo": KimodoConverter,
 }
 
 __all__ = [
     "BaseConverter",
-    "GVHMRConverter",
     "AMASSConverter",
     "KimodoConverter",
     "CONVERTER_REGISTRY",

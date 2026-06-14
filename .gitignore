@@ -4,3 +4,5 @@ body_models/
 *.pt
 *.pth
 *.ckpt
+motions_to_smpl/gvhmr/inputs/
+motions_to_smpl/gvhmr/outputs/

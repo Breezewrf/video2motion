@@ -1,21 +1,40 @@
 import numpy as np
+import pickle
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from pathlib import Path
 from pytorch3d.transforms import axis_angle_to_matrix
 from smplx.utils import Struct, to_np, to_tensor
+from hmr4d import BODY_MODELS_ROOT
 from hmr4d.utils.smplx_utils import forward_kinematics_motion
 
 
 class MinimalLBS(nn.Module):
-    def __init__(self, sp_ids, bm_dir='models/smplh', num_betas=16, model_type='smplh', **kwargs):
+    def __init__(self, sp_ids, bm_dir=BODY_MODELS_ROOT, num_betas=16, model_type='smpl', **kwargs):
         super().__init__()
         self.num_betas = num_betas
         self.sensor_point_vid = torch.tensor(sp_ids)
 
         # load struct data on predefined sensor-point
-        self.load_struct_on_sp(f'{bm_dir}/male/model.npz', prefix='male')
-        self.load_struct_on_sp(f'{bm_dir}/female/model.npz', prefix='female')
+        self.load_struct_on_sp(self._resolve_bm_path(bm_dir, model_type, 'male'), prefix='male')
+        self.load_struct_on_sp(self._resolve_bm_path(bm_dir, model_type, 'female'), prefix='female')
+
+    @staticmethod
+    def _resolve_bm_path(bm_dir, model_type, gender):
+        bm_dir = str(bm_dir)
+        upper_model_type = model_type.upper()
+        upper_gender = gender.upper()
+        candidates = [
+            f'{bm_dir}/{model_type}/{upper_model_type}_{upper_gender}.npz',
+            f'{bm_dir}/{model_type}/{upper_model_type}_{upper_gender}.pkl',
+            f'{bm_dir}/{gender}/model.npz',
+            f'{bm_dir}/{gender}/model.pkl',
+        ]
+        for candidate in candidates:
+            if Path(candidate).exists():
+                return candidate
+        raise FileNotFoundError(f"Cannot find {model_type} body model for {gender} under {bm_dir}.")
 
     def load_struct_on_sp(self, bm_path, prefix='m'):
         """
@@ -25,7 +44,11 @@ class MinimalLBS(nn.Module):
         num_betas = self.num_betas
         sp_vid = self.sensor_point_vid
         # load data
-        data_struct = Struct(**np.load(bm_path, encoding='latin1'))
+        if str(bm_path).endswith('.pkl'):
+            with open(bm_path, 'rb') as f:
+                data_struct = Struct(**pickle.load(f, encoding='latin1'))
+        else:
+            data_struct = Struct(**np.load(bm_path, encoding='latin1'))
 
         # v-template
         v_template = to_tensor(to_np(data_struct.v_template))  # (V, 3)

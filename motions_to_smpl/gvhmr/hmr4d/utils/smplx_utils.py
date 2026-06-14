@@ -6,7 +6,7 @@ import pickle
 from smplx import SMPL, SMPLX, SMPLXLayer
 from hmr4d.utils.body_model import BodyModelSMPLH, BodyModelSMPLX
 from hmr4d.utils.body_model.smplx_lite import SmplxLiteCoco17, SmplxLiteV437Coco17, SmplxLiteSmplN24
-from hmr4d import PROJ_ROOT
+from hmr4d import BODY_MODELS_ROOT
 
 # fmt: off
 SMPLH_PARENTS = torch.tensor([-1,  0,  0,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9,  9,  9, 12, 13, 14,
@@ -18,7 +18,10 @@ SMPLH_PARENTS = torch.tensor([-1,  0,  0,  0,  1,  2,  3,  4,  5,  6,  7,  8,  9
 def make_smplx(type="neu_fullpose", **kwargs):
     if type == "neu_fullpose":
         model = smplx.create(
-            model_path="inputs/models/smplx/SMPLX_NEUTRAL.npz", use_pca=False, flat_hand_mean=True, **kwargs
+            model_path=BODY_MODELS_ROOT / "smplx" / "SMPLX_NEUTRAL.npz",
+            use_pca=False,
+            flat_hand_mean=True,
+            **kwargs
         )
     elif type == "supermotion":
         # SuperMotion is trained on BEDLAM dataset, the smplx config is the same except only 10 betas are used
@@ -29,7 +32,7 @@ def make_smplx(type="neu_fullpose", **kwargs):
             "flat_hand_mean": False,
         }
         bm_kwargs.update(kwargs)
-        model = BodyModelSMPLX(model_path=PROJ_ROOT / "inputs/checkpoints/body_models", **bm_kwargs)
+        model = BodyModelSMPLX(model_path=BODY_MODELS_ROOT, **bm_kwargs)
     elif type == "supermotion_EVAL3DPW":
         # SuperMotion is trained on BEDLAM dataset, the smplx config is the same except only 10 betas are used
         bm_kwargs = {
@@ -39,7 +42,7 @@ def make_smplx(type="neu_fullpose", **kwargs):
             "flat_hand_mean": True,
         }
         bm_kwargs.update(kwargs)
-        model = BodyModelSMPLX(model_path="inputs/checkpoints/body_models", **bm_kwargs)
+        model = BodyModelSMPLX(model_path=BODY_MODELS_ROOT, **bm_kwargs)
     elif type == "supermotion_coco17":
         # Fast but only predicts 17 joints
         model = SmplxLiteCoco17()
@@ -58,7 +61,7 @@ def make_smplx(type="neu_fullpose", **kwargs):
             # create_expression=True, create_jaw_pose=Ture
         }
         # A /smplx folder should exist under the model_path
-        model = BodyModelSMPLX(model_path="inputs/checkpoints/body_models", **bm_kwargs)
+        model = BodyModelSMPLX(model_path=BODY_MODELS_ROOT, **bm_kwargs)
     elif type == "rich-smplh":
         bm_kwargs = {
             "model_type": "smplh",
@@ -66,12 +69,12 @@ def make_smplx(type="neu_fullpose", **kwargs):
             "use_pca": False,
             "flat_hand_mean": True,
         }
-        model = BodyModelSMPLH(model_path="inputs/checkpoints/body_models", **bm_kwargs)
+        model = BodyModelSMPLH(model_path=BODY_MODELS_ROOT, **bm_kwargs)
 
     elif type in ["smplx-circle", "smplx-groundlink"]:
         # don't use hand
         bm_kwargs = {
-            "model_path": "inputs/checkpoints/body_models",
+            "model_path": BODY_MODELS_ROOT,
             "model_type": "smplx",
             "gender": kwargs.get("gender"),
             "num_betas": 16,
@@ -95,7 +98,7 @@ def make_smplx(type="neu_fullpose", **kwargs):
 
         bm_kwargs = {
             "model_type": "smplx",
-            "model_path": "inputs/checkpoints/body_models",
+            "model_path": BODY_MODELS_ROOT,
             "gender": "neutral",
             "use_pca": False,
             "use_face_contour": True,
@@ -106,7 +109,7 @@ def make_smplx(type="neu_fullpose", **kwargs):
     elif type == "smplx-samp":
         # don't use hand
         bm_kwargs = {
-            "model_path": "inputs/checkpoints/body_models",
+            "model_path": BODY_MODELS_ROOT,
             "model_type": "smplx",
             "gender": kwargs.get("gender"),
             "num_betas": 10,
@@ -117,7 +120,7 @@ def make_smplx(type="neu_fullpose", **kwargs):
     elif type == "smplx-bedlam":
         # don't use hand
         bm_kwargs = {
-            "model_path": "inputs/checkpoints/body_models",
+            "model_path": BODY_MODELS_ROOT,
             "model_type": "smplx",
             "gender": kwargs.get("gender"),
             "num_betas": 11,
@@ -133,7 +136,7 @@ def make_smplx(type="neu_fullpose", **kwargs):
             ), "smplx-fit3d use neutral model: https://github.com/sminchisescu-research/imar_vision_datasets_tools/blob/e8c8f83ffac23cc36adf8ec8d0fd1c55679484ef/util/smplx_util.py#L15C34-L15C34"
 
         bm_kwargs = {
-            "model_path": "inputs/checkpoints/body_models/smplx",
+            "model_path": BODY_MODELS_ROOT / "smplx",
             "gender": kwargs.get("gender"),
             "num_betas": 10,
             "num_expression": 10,
@@ -142,7 +145,7 @@ def make_smplx(type="neu_fullpose", **kwargs):
 
     elif type == "smpl":
         bm_kwargs = {
-            "model_path": PROJ_ROOT / "inputs/checkpoints/body_models",
+            "model_path": BODY_MODELS_ROOT,
             "model_type": "smpl",
             "gender": "neutral",
             "num_betas": 10,
@@ -161,7 +164,7 @@ def make_smplx(type="neu_fullpose", **kwargs):
             "use_pca": False,
             "flat_hand_mean": False,
         }
-        model = BodyModelSMPLH(model_path="inputs/checkpoints/body_models", **bm_kwargs)
+        model = BodyModelSMPLH(model_path=BODY_MODELS_ROOT, **bm_kwargs)
 
     else:
         raise NotImplementedError
@@ -169,14 +172,14 @@ def make_smplx(type="neu_fullpose", **kwargs):
     return model
 
 
-def load_parents(npz_path="models/smplx/SMPLX_NEUTRAL.npz"):
-    smplx_struct = np.load("models/smplx/SMPLX_NEUTRAL.npz", allow_pickle=True)
+def load_parents(npz_path=BODY_MODELS_ROOT / "smplx" / "SMPLX_NEUTRAL.npz"):
+    smplx_struct = np.load(npz_path, allow_pickle=True)
     parents = smplx_struct["kintree_table"][0].astype(np.long)
     parents[0] = -1
     return parents
 
 
-def load_smpl_faces(npz_path="models/smplh/SMPLH_FEMALE.pkl"):
+def load_smpl_faces(npz_path=BODY_MODELS_ROOT / "smpl" / "SMPL_FEMALE.pkl"):
     with open(npz_path, "rb") as f:
         smpl_model = pickle.load(f, encoding="latin1")
     faces = np.array(smpl_model["f"].astype(np.int64))
