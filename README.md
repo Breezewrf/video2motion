@@ -11,8 +11,24 @@ source .venv/bin/activate
 Large body models and checkpoints are intentionally ignored by git. Make sure the required files are available under:
 
 ```text
-assets/body_models/
-motions_to_smpl/gvhmr/inputs/checkpoints/
+- motions_to_smpl/gvhmr/inputs/checkpoints/<subfolders>
+- motions_to_smpl/gvhmr/hmr4d/utils/body_model/*.pt, *.pts
+- assets/body_models/<subfolders>
+```
+
+Create a Huggingface repo for easier internal usage:
+```sh
+# Upload
+python upload_to_hf.py \
+	--repo-id breezewrf/unimotion_ckpt \
+	--private \
+	--create-repo \
+  --token $HF_TOKEN \
+
+# Download
+python3 download_from_hf.py \
+  --repo-id breezewrf/unimotion_ckpt \
+  --token $HF_TOKEN
 ```
 
 ## Recommended Pipeline
