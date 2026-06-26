@@ -4,12 +4,12 @@
 
 ## Kimodo branch
 
-`python3 motions_to_smpl/kimodo_converter.py --input ./motion_data/kimodo_npz/run_front.npz --output ./motion_data/smpl_npz/run_front.npz`
+`python3 converters/kimodo_converter.py --input ./motion_data/kimodo_npz/run_front.npz --output ./motion_data/smpl_npz/run_front.npz`
 
 `python3 gmr/scripts/smplx_to_robot.py --smplx_file ./motion_data/smpl_npz/run_front.npz --robot unitree_g1_23dof --save_path ./motion_data/gmr_pkl/run_front.pkl`
 
 ## GVHMR branch
-`cd motions_to_smpl/gvhmr/`
+`cd converters/gvhmr/`
 `python3 run.py --video=example/tennis.mp4 -s`
 
 `cd ../..`

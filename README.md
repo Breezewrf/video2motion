@@ -11,8 +11,8 @@ source .venv/bin/activate
 Large body models and checkpoints are intentionally ignored by git. Make sure the required files are available under:
 
 ```text
-- motions_to_smpl/gvhmr/inputs/checkpoints/<subfolders>
-- motions_to_smpl/gvhmr/hmr4d/utils/body_model/*.pt, *.pts
+- converters/gvhmr/inputs/checkpoints/<subfolders>
+- converters/gvhmr/hmr4d/utils/body_model/*.pt, *.pts
 - assets/body_models/<subfolders>
 ```
 
@@ -64,7 +64,7 @@ motion_data/unitree_g1_23dof/
 .venv/bin/python pipeline.py \
   --source video \
   --video-method gvhmr \
-  --input motions_to_smpl/gvhmr/example/tennis.mp4 \
+  --input converters/gvhmr/example/tennis.mp4 \
   --name tennis \
   --robot unitree_g1_23dof \
   -s
@@ -153,7 +153,7 @@ Use `--visualize` on a normal pipeline command:
 .venv/bin/python pipeline.py \
   --source video \
   --video-method gvhmr \
-  --input motions_to_smpl/gvhmr/example/tennis.mp4 \
+  --input converters/gvhmr/example/tennis.mp4 \
   --name tennis \
   --robot unitree_g1_23dof \
   --visualize
@@ -166,7 +166,7 @@ These commands are useful for debugging individual stages.
 ### Kimodo to SMPL NPZ
 
 ```bash
-python3 motions_to_smpl/kimodo_converter.py \
+python3 converters/kimodo_converter.py \
   --input ./motion_data/unitree_g1_23dof/kimodo_npz/run_front.npz \
   --output ./motion_data/unitree_g1_23dof/smpl_npz/run_front.npz
 ```
@@ -183,7 +183,7 @@ python3 gmr/scripts/smplx_to_robot.py \
 ### Video to GVHMR Results
 
 ```bash
-cd motions_to_smpl/gvhmr
+cd converters/gvhmr
 python3 run.py \
   --video=example/tennis.mp4 \
   --output_root=../../motion_data/unitree_g1_23dof/gvhmr_hmr4d_pt \
@@ -211,7 +211,7 @@ python3 gmr/scripts/gvhmr_to_robot.py \
 This is for compatibility/debugging only. GMR should consume `hmr4d_results.pt` directly for the video path.
 
 ```bash
-python3 motions_to_smpl/gvhmr_converter.py \
+python3 converters/gvhmr_converter.py \
   --input ./motion_data/unitree_g1_23dof/gvhmr_hmr4d_pt/tennis/hmr4d_results.pt \
   --output ./motion_data/unitree_g1_23dof/smpl_npz/tennis.npz
 ```

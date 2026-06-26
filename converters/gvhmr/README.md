@@ -1,6 +1,6 @@
 `source .venv/bin/activate`
 
-`cd motions_to_smpl/gvhmr`
+`cd converters/gvhmr`
 
 `python3 run.py --video=example/tennis.mp4 -s`
 

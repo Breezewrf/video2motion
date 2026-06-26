@@ -18,13 +18,13 @@ import torch
 
 try:
     from .base import BaseConverter, create_smpl_data
-except ImportError:  # Allows: python motions_to_smpl/gvhmr_converter.py ...
+except ImportError:  # Allows: python converters/gvhmr_converter.py ...
     from base import BaseConverter, create_smpl_data
 
 logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-GVHMR_ROOT = PROJECT_ROOT / "motions_to_smpl" / "gvhmr"
+GVHMR_ROOT = PROJECT_ROOT / "converters" / "gvhmr"
 DEFAULT_OUTPUT_ROOT = PROJECT_ROOT / "motion_data" / "gvhmr_hmr4d_pt"
 
 
@@ -53,7 +53,7 @@ class GVHMRConverter(BaseConverter):
             input_path: Video path, or an existing ``hmr4d_results.pt``.
             **kwargs:
                 output_root: GVHMR output root. Defaults to
-                    ``motions_to_smpl/gvhmr/outputs/demo``.
+                    ``converters/gvhmr/outputs/demo``.
                 static_cam: Forward ``--static_cam`` to GVHMR.
                 use_dpvo: Forward ``--use_dpvo`` to GVHMR.
                 f_mm: Forward ``--f_mm`` to GVHMR.

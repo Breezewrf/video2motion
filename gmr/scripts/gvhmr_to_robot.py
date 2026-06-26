@@ -26,7 +26,7 @@ if __name__ == "__main__":
         help="SMPLX motion file to load.",
         type=str,
         # required=True,
-        default="/home/lscm/Desktop/workspace/Humanoid/UniMotion/motions_to_smpl/gvhmr/outputs/demo/tennis/hmr4d_results.pt",
+        default="/home/lscm/Desktop/workspace/Humanoid/UniMotion/converters/gvhmr/outputs/demo/tennis/hmr4d_results.pt",
     )
     
     parser.add_argument(

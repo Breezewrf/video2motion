@@ -19,7 +19,7 @@ try:
     from .kimodo.motion_io import load_kimodo_npz_as_torch
     from .kimodo.skeleton.registry import build_skeleton
     from .kimodo.smplx import AMASSConverter
-except ImportError:  # Allows: python motions_to_smpl/kimodo_converter.py ...
+except ImportError:  # Allows: python converters/kimodo_converter.py ...
     from base import BaseConverter, create_smpl_data
     from kimodo.motion_io import load_kimodo_npz_as_torch
     from kimodo.skeleton.registry import build_skeleton

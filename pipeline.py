@@ -16,8 +16,8 @@ from pathlib import Path
 import joblib
 import numpy as np
 
-from motions_to_smpl import CONVERTER_REGISTRY
-from motions_to_smpl.gvhmr_converter import run_gvhmr_to_results, export_gvhmr_results_to_smpl_npz
+from converters import CONVERTER_REGISTRY
+from converters.gvhmr_converter import run_gvhmr_to_results, export_gvhmr_results_to_smpl_npz
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 MOTION_DATA_ROOT = PROJECT_ROOT / "motion_data"

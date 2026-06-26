@@ -3,5 +3,5 @@
 import sys
 
 # The copied Kimodo modules use absolute imports such as ``kimodo.geometry``.
-# Register this package under that name when imported via ``motions_to_smpl``.
+# Register this package under that name when imported via ``converters``.
 sys.modules.setdefault("kimodo", sys.modules[__name__])

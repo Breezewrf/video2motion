@@ -4,8 +4,8 @@
 
 This preserves the on-disk layout expected by the codebase:
 
-- motions_to_smpl/gvhmr/inputs/checkpoints/<subfolders>
-- motions_to_smpl/gvhmr/hmr4d/utils/body_model/*.pt, *.pts
+- converters/gvhmr/inputs/checkpoints/<subfolders>
+- converters/gvhmr/hmr4d/utils/body_model/*.pt, *.pts
 - assets/body_models/<subfolders>
 
 python -m pip install huggingface_hub
@@ -34,22 +34,22 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--checkpoints-source",
-        default="motions_to_smpl/gvhmr/inputs/checkpoints",
+        default="converters/gvhmr/inputs/checkpoints",
         help="Local checkpoint root to upload recursively.",
     )
     parser.add_argument(
         "--checkpoints-target",
-        default="motions_to_smpl/gvhmr/inputs/checkpoints",
+        default="converters/gvhmr/inputs/checkpoints",
         help="Target folder inside the HF repo for checkpoints.",
     )
     parser.add_argument(
         "--body-model-source",
-        default="motions_to_smpl/gvhmr/hmr4d/utils/body_model",
+        default="converters/gvhmr/hmr4d/utils/body_model",
         help="Local body-model folder to upload. Only .pt and .pts files are uploaded.",
     )
     parser.add_argument(
         "--body-model-target",
-        default="motions_to_smpl/gvhmr/hmr4d/utils/body_model",
+        default="converters/gvhmr/hmr4d/utils/body_model",
         help="Target folder inside the HF repo for body-model files.",
     )
     parser.add_argument(

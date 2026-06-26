@@ -4,8 +4,8 @@
 
 This restores the same local paths used by the uploader:
 
-- motions_to_smpl/gvhmr/inputs/checkpoints/<subfolders>
-- motions_to_smpl/gvhmr/hmr4d/utils/body_model/*.pt, *.pts
+- converters/gvhmr/inputs/checkpoints/<subfolders>
+- converters/gvhmr/hmr4d/utils/body_model/*.pt, *.pts
 - assets/body_models/<subfolders>
 
 Usage: python3 download_from_hf.py   --repo-id breezewrf/unimotion_ckpt --token $HF_TOKEN
@@ -18,9 +18,9 @@ from pathlib import Path
 
 
 ALLOW_PATTERNS = [
-    "motions_to_smpl/gvhmr/inputs/checkpoints/**",
-    "motions_to_smpl/gvhmr/hmr4d/utils/body_model/*.pt",
-    "motions_to_smpl/gvhmr/hmr4d/utils/body_model/*.pts",
+    "converters/gvhmr/inputs/checkpoints/**",
+    "converters/gvhmr/hmr4d/utils/body_model/*.pt",
+    "converters/gvhmr/hmr4d/utils/body_model/*.pts",
     "assets/body_models/**",
 ]
 

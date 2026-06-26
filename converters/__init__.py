@@ -1,5 +1,5 @@
 """
-motions_to_smpl: 多源运动数据 → SMPL 统一格式转换器
+converters: 多源运动数据 → SMPL 统一格式转换器
 
 支持的数据源:
     - amass: AMASS 动捕数据集
@@ -10,7 +10,7 @@ motions_to_smpl: 多源运动数据 → SMPL 统一格式转换器
     GVHMR 生成 hmr4d_results.pt，并由 GMR 直接消费该文件。
 
 用法:
-    from motions_to_smpl import CONVERTER_REGISTRY, validate_smpl_data
+    from converters import CONVERTER_REGISTRY, validate_smpl_data
 
     converter = CONVERTER_REGISTRY["amass"]()
     smpl_data = converter.convert("path/to/amass.npz")
