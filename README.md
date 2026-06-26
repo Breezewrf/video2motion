@@ -104,7 +104,7 @@ motion_data/unitree_g1_23dof/gmr_pkl/run_front.pkl
   --robot unitree_g1_23dof
 ```
 
-### GMR PKL to CSV
+### [Opt] [Kimodo|Video|AMASS] to GMR PKL to CSV
 
 Add `--to-csv` to any pipeline command. It runs all previous stages required for that source and then writes CSV.
 
@@ -123,7 +123,7 @@ Output:
 motion_data/unitree_g1_23dof/gmr_pkl/csv/run_front.csv
 ```
 
-### GMR PKL to Mjlab NPZ
+### [Opt] [Kimodo|Video|AMASS] to GMR PKL to Mjlab NPZ
 
 Add `--to-mjlab-npz` to any pipeline command. It runs all previous stages required for that source, creates CSV if needed, and then writes the mjlab NPZ.
 
@@ -145,7 +145,7 @@ Output:
 unitree_rl_mjlab/src/assets/motions/g1_23dof/run_front.npz
 ```
 
-### Visualize GMR PKL
+### [Opt] Visualize
 
 Use `--visualize` on a normal pipeline command:
 
@@ -231,6 +231,7 @@ python3 vis_robot_motion.py \
   --robot_motion_path motion_data/unitree_g1_23dof/gmr_pkl/run_front.pkl \
   --xyzw
 ```
+GMR exported pkl has xyzw format rotation, remember to use `--xyzw` when visualization.
 
 ### CSV to Mjlab NPZ
 
@@ -255,3 +256,17 @@ python3 ./scripts/train.py \
   --env.scene.num-envs=4096
 cd ..
 ```
+
+### CSV to IsaacLab NPZ
+```bash
+cd whole_body_tracking
+
+python scripts/csv_to_npz.py --input_file ./motion_data_pkl/csv/run_front.csv --input_fps 30 --output_name run_front --dof 23 --output_fps 50
+```
+
+### IsaacLab Train
+The motion will be uploaded to wandb, use registry_name to get the motion data.
+```bash
+python scripts/rsl_rl/train.py --task=Tracking-Flat-G1-23dof-Wo-State-Estimation-v0 --registry_name org_name/wandb-registry-motions/motion_name --headless --logger wandb --log_project_name beyondmimic --run_name run_name --max_iterations 15000
+```
+Replace motion_name and run_name with run_front for easier definition.

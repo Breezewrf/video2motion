@@ -6,3 +6,4 @@ body_models/
 *.ckpt
 motions_to_smpl/gvhmr/inputs/
 motions_to_smpl/gvhmr/outputs/
+motion_data/
