@@ -1,0 +1,50 @@
+[project]
+name = "unimotion"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.11.*"
+dependencies = [
+    "einops>=0.8.2",
+    "joblib>=1.5.3",
+    "loop-rate-limiters>=1.2.0",
+    "mink>=1.1.0",
+    "mjlab==1.2.0",
+    "mujoco==3.7.0",
+    "scipy>=1.15.3",
+    "smplx",
+    "warp-lang==1.12.1",
+    "mujoco-warp",
+    "unitree-rl-mjlab",
+    "general_motion_retargeting",
+    "torch==2.11.0+cu128",
+    "torchvision==0.26.0+cu128",
+    "opencv-python>=4.13.0.92",
+    "lightning==2.3.0",
+    "hydra-colorlog>=1.2.0",
+    "pytorch3d",
+    "hydra-zen>=0.16.0",
+    "ffmpeg-python>=0.2.0",
+    "wis3d>=1.0.1",
+    "ultralytics>=8.4.66",
+    "yacs>=0.1.8",
+    "timm==0.9.12",
+    "pycolmap>=4.0.4",
+    "av==13.0.0",
+    "chumpy==0.70",
+    "lap==0.5.13"
+]
+
+[[tool.uv.index]]
+name = "pytorch-cuda"
+url = "https://download.pytorch.org/whl/cu128"
+
+[tool.uv.sources]
+smplx = { git = "https://github.com/vchoutas/smplx.git" }
+general_motion_retargeting = { path = "./gmr", editable = true }
+unitree-rl-mjlab = { path = "./unitree_rl_mjlab", editable = true }
+pytorch3d = { url = "https://github.com/MiroPsota/torch_packages_builder/releases/download/pytorch3d-0.7.9%2Bd9839a9/pytorch3d-0.7.9%2Bd9839a9pt2.11.0cu128-cp311-cp311-linux_x86_64.whl" }
+
+[tool.uv.extra-build-dependencies]
+chumpy = ["pip", "setuptools"]
+
