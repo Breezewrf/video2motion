@@ -136,6 +136,7 @@ def convert_csv_to_mjlab_npz(
     output_fps: float,
     device: str,
     render: bool,
+    supermimic_format: bool = False,
 ) -> Path:
     """Convert CSV motion to unitree_rl_mjlab motion NPZ."""
     cmd = [
@@ -156,6 +157,8 @@ def convert_csv_to_mjlab_npz(
     ]
     if render:
         cmd.append("--render")
+    if supermimic_format:
+        cmd.append("--supermimic-format")
 
     mjlab_root = PROJECT_ROOT / "unitree_rl_mjlab"
     logger.info("Running mjlab CSV->NPZ: %s", " ".join(cmd))
@@ -257,6 +260,11 @@ def build_argparser() -> argparse.ArgumentParser:
 
     parser.add_argument("--to-csv", action="store_true", help="Convert GMR pkl to CSV")
     parser.add_argument("--to-mjlab-npz", action="store_true", help="Convert CSV to unitree_rl_mjlab NPZ")
+    parser.add_argument(
+        "--supermimic-format",
+        action="store_true",
+        help="Include joint/body names and quaternion order in mjlab NPZ exports",
+    )
     parser.add_argument("--mjlab-robot", default="g1_23dof", choices=["g1", "g1_23dof"])
     parser.add_argument("--mjlab-input-fps", type=float, default=30.0)
     parser.add_argument("--mjlab-output-fps", type=float, default=30.0)
@@ -337,6 +345,7 @@ def main() -> None:
             output_fps=args.mjlab_output_fps,
             device=args.mjlab_device,
             render=args.mjlab_render,
+            supermimic_format=args.supermimic_format,
         )
         logger.info("mjlab NPZ ready: %s", mjlab_npz)
 

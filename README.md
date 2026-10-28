@@ -104,6 +104,32 @@ motion_data/unitree_g1_23dof/gmr_pkl/run_front.pkl
   --robot unitree_g1_23dof
 ```
 
+### AMASS-style SMPL NPZ to 29 DoF SuperMimic NPZ
+
+Convert the ACCAD motion data to supermimic npz format:
+
+```bash
+.venv/bin/python pipeline.py \
+  --source amass \
+  --input ./motion_data/ACCAD/ACCAD/Male1Walking_c3d/Walk_B16_-_Walk_turn_change_stageii.npz \
+  --name Walk_B16_-_Walk_turn_change_stageii \
+  --robot unitree_g1 \
+  --to-mjlab-npz \
+  --mjlab-robot g1 \
+  --supermimic-format \
+  --mjlab-input-fps 30 \
+  --mjlab-output-fps 50
+```
+
+Output: `unitree_rl_mjlab/src/assets/motions/g1/Walk_B16_-_Walk_turn_change_stageii.npz`.
+
+Then the output npz can be played in supermimic:
+```bash
+cd /path/to/supermimic & source .venv/bin/activate
+
+python3 scripts/play_supermimic.py   --checkpoint checkpoints/best/policy_best.pt   --motion /path/to/UniMotion/unitree_rl_mjlab/src/assets/motions/g1/Walk_B16_-_Walk_turn_change_stageii.npz   --loop
+```
+
 ### [Opt] [Kimodo|Video|AMASS] to GMR PKL to CSV
 
 Add `--to-csv` to any pipeline command. It runs all previous stages required for that source and then writes CSV.
@@ -144,6 +170,34 @@ Output:
 ```text
 unitree_rl_mjlab/src/assets/motions/g1_23dof/run_front.npz
 ```
+
+For SuperMimic playback, also pass `--supermimic-format`. This adds
+`joint_names`, `body_names`, and `quaternion_order="wxyz"` using the exported
+model's array order. Set `--mjlab-output-fps 50` and select the robot variant
+matching the policy (`--robot unitree_g1 --mjlab-robot g1` for 29 DoF, or the
+23 DoF options above). The flag only adds metadata; exports without it keep
+the existing format.
+
+For example, convert the existing `solo.mp4` video to a 29 DoF, 50 Hz
+SuperMimic NPZ:
+
+```bash
+.venv/bin/python pipeline.py \
+  --source video \
+  --video-method gvhmr \
+  --input motion_data/unitree_g1_23dof/video/solo.mp4 \
+  --name solo \
+  --robot unitree_g1 \
+  --to-mjlab-npz \
+  --mjlab-robot g1 \
+  --supermimic-format \
+  --mjlab-input-fps 30 \
+  --mjlab-output-fps 50
+```
+
+Output: `unitree_rl_mjlab/src/assets/motions/g1/solo.npz`.
+The video is retargeted to 29 DoF regardless of its input directory name.
+For a stationary camera, append `--static-cam`.
 
 ### [Opt] Visualize
 
@@ -234,6 +288,9 @@ python3 vis_robot_motion.py \
 GMR exported pkl has xyzw format rotation, remember to use `--xyzw` when visualization.
 
 ### CSV to Mjlab NPZ
+
+For SuperMimic-compatible metadata, add `--supermimic-format` to the command
+below and use `--output-fps 50`.
 
 ```bash
 cd unitree_rl_mjlab

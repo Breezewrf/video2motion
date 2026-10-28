@@ -29,6 +29,11 @@ if __name__ == "__main__":
     parser.add_argument("--robot", type=str, default="unitree_g1")
                         
     parser.add_argument("--robot_motion_path", type=str, required=True)
+    parser.add_argument(
+        "--camera_follow",
+        action="store_true",
+        help="Keep the MuJoCo camera locked to the robot base; omit this flag to use a free camera.",
+    )
 
     parser.add_argument("--record_video", action="store_true")
     parser.add_argument("--video_path", type=str, 
@@ -78,6 +83,7 @@ if __name__ == "__main__":
         env.step(motion_root_pos[frame_idx], 
                 motion_root_rot[frame_idx], 
                 motion_dof_pos[frame_idx], 
+                follow_camera=args.camera_follow,
                 rate_limit=True)
         frame_idx += 1
         if frame_idx >= len(motion_root_pos):
